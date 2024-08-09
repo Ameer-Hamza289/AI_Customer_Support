@@ -51,11 +51,11 @@ export default function AuthPage() {
                         placeholder="Password"
                         className="input-field"
                     />
-                    <div className="flex justify-between">
-                        <button type="button" onClick={() => handleSubmit('sign-up')} className="btn-primary">
+                    <div className="flex flex-col gap-4">
+                        <button type="button" onClick={() => handleSubmit('sign-up')} className="text-white bg-blue-700">
                             Sign Up
                         </button>
-                        <button type="button" onClick={() => handleSubmit('login')} className="btn-secondary">
+                        <button type="button" onClick={() => handleSubmit('login')} className="text-white bg-blue-700">
                             Login
                         </button>
                     </div>
