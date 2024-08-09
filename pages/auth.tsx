@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+'use client';
+import { ChangeEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function Auth() {
+export default function AuthPage() {
     const [formData, setFormData] = useState({ name: '', email: '', password: '' });
     const router = useRouter();
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -13,12 +14,12 @@ export default function Auth() {
         });
     };
 
-    const handleSubmit = (type) => {
+    const handleSubmit = (type: 'sign-up' | 'login') => {
         console.log(`${type} clicked`);
         console.log(formData);
 
         // After successful login/signup
-        router.push('/dashboard'); // Redirect to dashboard or another page
+        router.push('/'); // Redirect to dashboard or another page
     };
 
     return (
@@ -51,10 +52,10 @@ export default function Auth() {
                         className="input-field"
                     />
                     <div className="flex justify-between">
-                        <button type="button" onClick={() => handleSubmit('Sign Up')} className="btn-primary">
+                        <button type="button" onClick={() => handleSubmit('sign-up')} className="btn-primary">
                             Sign Up
                         </button>
-                        <button type="button" onClick={() => handleSubmit('Login')} className="btn-secondary">
+                        <button type="button" onClick={() => handleSubmit('login')} className="btn-secondary">
                             Login
                         </button>
                     </div>

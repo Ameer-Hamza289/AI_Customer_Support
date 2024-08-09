@@ -2,12 +2,17 @@
 'use client'
 import { useState } from 'react';
 import Head from 'next/head';
-import ChatContainer from './components/ChatContainer';
-import ChatMessage from './components/ChatMessage';
+import ChatContainer from '@/components/ChatContainer';
+import ChatMessage from '@/components/ChatMessage';
 import { FaUserCircle } from 'react-icons/fa';
 
+interface Message {
+  text: string;
+  sender: 'bot' | 'user';
+}
+
 export default function Home() {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     { text: 'How are you?', sender: 'bot' },
     { text: 'Write me an essay about ancient Rome', sender: 'user' },
     { text: 'How are you?', sender: 'bot' },
