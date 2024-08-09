@@ -23,8 +23,8 @@ export default function AuthPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-4">
+            <div className="bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
                 <h2 className="text-2xl font-bold text-center mb-6">Account</h2>
                 <form className="space-y-4">
                     <input
@@ -33,7 +33,7 @@ export default function AuthPage() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Name"
-                        className="input-field"
+                        className="w-full p-3 bg-gray-200 rounded border border-gray-300"
                     />
                     <input
                         type="email"
@@ -41,7 +41,7 @@ export default function AuthPage() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="Email"
-                        className="input-field"
+                        className="w-full p-3 bg-gray-200 rounded border border-gray-300"
                     />
                     <input
                         type="password"
@@ -49,13 +49,22 @@ export default function AuthPage() {
                         value={formData.password}
                         onChange={handleChange}
                         placeholder="Password"
-                        className="input-field"
+                        className="w-full p-3 bg-gray-200 rounded border border-gray-300"
                     />
+                    <p>If you have not account, Click on Sign Up</p>
                     <div className="flex flex-col gap-4">
-                        <button type="button" onClick={() => handleSubmit('sign-up')} className="text-white bg-blue-700">
+                        <button
+                            type="button"
+                            onClick={() => handleSubmit('sign-up')}
+                            className="w-full p-3 text-white bg-green-600 rounded hover:bg-gray-950"
+                        >
                             Sign Up
                         </button>
-                        <button type="button" onClick={() => handleSubmit('login')} className="text-white bg-blue-700">
+                        <button
+                            type="button"
+                            onClick={() => handleSubmit('login')}
+                            className="w-full p-3 text-white bg-green-600 rounded hover:bg-gray-950"
+                        >
                             Login
                         </button>
                     </div>
