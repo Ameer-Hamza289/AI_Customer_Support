@@ -14,7 +14,7 @@ interface Message {
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([
     { text: 'How are you?', sender: 'bot' },
-    { text: 'Write me an essay about ancient Rome', sender: 'user' },
+    { text: 'Write me an essay about ancient Rome, their civilization and culture and what food was the best considered item among them?', sender: 'user' },
     { text: 'How are you?', sender: 'bot' },
   ]);
 
