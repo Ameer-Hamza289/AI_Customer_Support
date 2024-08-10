@@ -68,6 +68,7 @@ export default function Home() {
       </header>
 
       <main className="flex-grow flex flex-col items-center p-4">
+        <h2>if you have any query you can ask freely </h2>
         <ChatContainer onSendMessage={handleSendMessage}>
           {messages.map((message, index) => (
             <ChatMessage key={index} text={message.text} sender={message.sender} />
@@ -76,10 +77,10 @@ export default function Home() {
       </main>
 
       <footer className="p-4 bg-gray-800 flex justify-between">
-        <button className="bg-gray-700 p-2 rounded">NEW CHAT</button>
-        <button className="bg-gray-700 p-2 rounded">SUPPORT</button>
-        <button className="bg-gray-700 p-2 rounded">RATE APP</button>
-        <button className="bg-gray-700 p-2 rounded">LOG OUT</button>
+        {/* <button className="bg-green-600 p-2 rounded">NEW CHAT</button> */}
+        {/* <button className="bg-green-600 p-2 rounded">SUPPORT</button> */}
+        <button className="bg-green-600 p-2 rounded">RATE APP</button>
+        <button className="bg-green-600 p-2 rounded">LOG OUT</button>
       </footer>
     </div>
   );
