@@ -1,15 +1,11 @@
-
 'use client'
 import { useState } from 'react';
 import Head from 'next/head';
 import ChatContainer from '@/components/ChatContainer';
 import ChatMessage from '@/components/ChatMessage';
 import { FaUserCircle } from 'react-icons/fa';
+import { ChatResponse, Message } from '@/types/page';
 
-interface Message {
-  text: string;
-  sender: 'bot' | 'user';
-}
 
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([
@@ -18,10 +14,26 @@ export default function Home() {
     { text: 'How are you?', sender: 'bot' },
   ]);
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
-  const handleSendMessage = (text: string) => {
+
+  async function sendMessage(message: string): Promise<string> {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }),
+    });
+
+    const data: ChatResponse = await response.json();
+    return data.message;
+  }
+  const handleSendMessage = async (text: string) => {
     setMessages([...messages, { text, sender: 'user' }]);
+    const aiResponse = await sendMessage(text);
+    console.log(aiResponse, "response");
+
   };
 
   const handleLogout = () => {
@@ -38,13 +50,13 @@ export default function Home() {
       <header className="flex justify-between p-4 bg-gray-800 relative">
         <h1 className="text-lg font-bold">Chat AI</h1>
         <div className="relative">
-          <FaUserCircle 
-            className="text-3xl cursor-pointer" 
-            onClick={() => setDropdownOpen(!dropdownOpen)} 
+          <FaUserCircle
+            className="text-3xl cursor-pointer"
+            onClick={() => setDropdownOpen(!dropdownOpen)}
           />
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-gray-700 rounded-md shadow-lg z-10">
-              <button 
+              <button
                 className="w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-600"
                 onClick={handleLogout}
               >
