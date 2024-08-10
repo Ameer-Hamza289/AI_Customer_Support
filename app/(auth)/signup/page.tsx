@@ -35,10 +35,7 @@ export default function AuthPage() {
 
     const cookie = getCookie("jwt");
     console.log("jwt:", cookie);
-    const response = await axios.post(
-      "http://localhost:3000/api/auth/login",
-      formData
-    );
+    const response = await axios.post("/api/auth/signup", formData);
     if (response.status == 200) {
       router.push("/");
     }
