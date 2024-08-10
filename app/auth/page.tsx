@@ -2,8 +2,13 @@
 import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+interface FormType {
+    name: string;
+    email: string;
+    password: string;
+}
 export default function AuthPage() {
-    const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+    const [formData, setFormData] = useState<FormType>({ name: '', email: '', password: '' });
     const router = useRouter();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
