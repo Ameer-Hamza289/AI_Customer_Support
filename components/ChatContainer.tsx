@@ -1,16 +1,13 @@
 'use client';
-
-
 import React, { useState, KeyboardEvent } from 'react';
-import ChatMessage from './ChatMessage';
 
-type ChatContainerProps = {
+interface ChatContainerProps {
   children: React.ReactNode;
   onSendMessage: (text: string) => void;
 };
 
 const ChatContainer: React.FC<ChatContainerProps> = ({ children, onSendMessage }) => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState<string>('');
 
   const handleSend = () => {
     if (input.trim()) {
