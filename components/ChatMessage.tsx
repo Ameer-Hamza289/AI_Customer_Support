@@ -1,6 +1,6 @@
 import React from 'react';
 
-type ChatMessageProps = {
+interface ChatMessageProps {
   text: string;
   sender: 'user' | 'bot';
 };
