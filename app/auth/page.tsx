@@ -30,7 +30,7 @@ export default function AuthPage() {
                 console.log(res,"response");
                 
                 toast.success('Login Successful!');
-                router.push('/');
+                router.push('/chat');
             })
             .catch((error: any) => {
                 setError(error.message);
@@ -44,7 +44,7 @@ export default function AuthPage() {
         signIn(formData.email, formData.password)
             .then(() => {
                 toast.success('Login Successful!');
-                router.push('/');
+                router.push('/chat');
             })
             .catch((error: any) => {
                 setError(error.message);
@@ -55,7 +55,7 @@ export default function AuthPage() {
 
     useEffect(() => {
         if (user) {
-            router.push('/');
+            router.push('/chat');
         }
     }, [user])
    
@@ -72,7 +72,7 @@ export default function AuthPage() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Name"
-                        className="w-full p-3 bg-gray-200 rounded border border-gray-300"
+                        className="w-full p-3 bg-gray-200 rounded border border-gray-300 text-black"
                     />
                     <input
                         type="email"
@@ -80,7 +80,7 @@ export default function AuthPage() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="Email"
-                        className="w-full p-3 bg-gray-200 rounded border border-gray-300"
+                        className="w-full p-3 bg-gray-200 rounded border border-gray-300 text-black"
                     />
                     <input
                         type="password"
@@ -88,7 +88,7 @@ export default function AuthPage() {
                         value={formData.password}
                         onChange={handleChange}
                         placeholder="Password"
-                        className="w-full p-3 bg-gray-200 rounded border border-gray-300"
+                        className="w-full p-3 bg-gray-200 rounded border border-gray-300 text-black"
                     />
                     <strong className='block text-red-400'>{error}</strong>
                     <p>If you have not account, Click on Sign Up</p>
