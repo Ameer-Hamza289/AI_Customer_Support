@@ -110,10 +110,7 @@ export default function AuthPage() {
                     </div>
                 </form>
             </div>
-
         </div>
-        </>
-
     );
 }
 
