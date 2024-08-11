@@ -1,5 +1,11 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+Tech stacks used:
+
+- Firebase for auth
+- Gemini AI integration
+- Tailwind for styling
+
 ## Getting Started with AI Customer Support App
 
 First, run the development server:
