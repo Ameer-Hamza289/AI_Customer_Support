@@ -1,38 +1,61 @@
-
 'use client'
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import ChatContainer from '@/components/ChatContainer';
 import ChatMessage from '@/components/ChatMessage';
 import { FaUserCircle } from 'react-icons/fa';
+
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { useUser } from '@/context/userContext';
 import Link from 'next/link';
+import { ChatResponse, Message } from '@/types/page';
 
-interface Message {
-  text: string;
-  sender: 'bot' | 'user';
-}
+
 
 export default function Home() {
 
   const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([
-    { text: 'How are you?', sender: 'bot' },
-    { text: 'Write me an essay about ancient Rome, their civilization and culture and what food was the best considered item among them?', sender: 'user' },
-    { text: 'How are you?', sender: 'bot' },
+    { text: 'Hey, How can i assist you?', sender: 'assistant' }
   ]);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const handleSendMessage = (text: string) => {
-    setMessages([...messages, { text, sender: 'user' }]);
+
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+
+
+  async function sendMessage(message: string): Promise<string> {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }),
+    });
+
+    const data: ChatResponse = await response.json();
+    return data.message;
+  }
+
+  const clearChat=()=>{
+    setMessages([{ text: 'Hey, How can i assist you?', sender: 'assistant' }])
+  }
+
+  const handleSendMessage = async (text: string) => {
+    const newMessages = [...messages, { text, sender: 'user' as 'user' }];
+    setMessages(newMessages);
+  
+    const aiResponse = await sendMessage(text);
+    // console.log(aiResponse, "response");
+    setMessages([...newMessages, { text: aiResponse, sender: "assistant" }]);
   };
   const { user, loading, logout } = useUser();
+
 
   const handleLogout = async () => {
     try {
       await logout();
+      clearChat();
       toast.success('Logout Successfully!');
       router.push('/auth');
     } catch (error) {
@@ -78,6 +101,7 @@ export default function Home() {
       </header>
 
       <main className="flex-grow flex flex-col items-center p-4">
+        <h2>if you have any query you can ask freely </h2>
         <ChatContainer onSendMessage={handleSendMessage}>
           {messages.map((message, index) => (
             <ChatMessage key={index} text={message.text} sender={message.sender} />
@@ -86,10 +110,10 @@ export default function Home() {
       </main>
 
       <footer className="p-4 bg-gray-800 flex justify-between">
-        <button className="bg-gray-700 p-2 rounded">NEW CHAT</button>
-        <button className="bg-gray-700 p-2 rounded">SUPPORT</button>
-        <button className="bg-gray-700 p-2 rounded">RATE APP</button>
-        <button className="bg-gray-700 p-2 rounded">LOG OUT</button>
+        {/* <button className="bg-green-600 p-2 rounded">NEW CHAT</button> */}
+        {/* <button className="bg-green-600 p-2 rounded">SUPPORT</button> */}
+        <button className="bg-green-600 p-2 rounded">RATE APP</button>
+        <button className="bg-green-600 p-2 rounded">LOG OUT</button>
       </footer>
     </div>
   );
