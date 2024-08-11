@@ -52,6 +52,7 @@ export default function AuthPage() {
             });
 
     };
+
     useEffect(() => {
         if (user) {
             router.push('/');
@@ -61,6 +62,7 @@ export default function AuthPage() {
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-4">
+         
             <div className="bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
                 <h2 className="text-2xl font-bold text-center mb-6">Authenticate to continue</h2>
                 <form className="space-y-4">
@@ -108,6 +110,10 @@ export default function AuthPage() {
                     </div>
                 </form>
             </div>
+
         </div>
+        </>
+
     );
 }
+
