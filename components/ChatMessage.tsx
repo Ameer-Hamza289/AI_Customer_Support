@@ -23,7 +23,7 @@ import React from 'react';
 
 interface ChatMessageProps {
   text: string;
-  sender: 'user' | 'bot';
+  sender: 'user' | 'assistant';
 };
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ text, sender }) => {

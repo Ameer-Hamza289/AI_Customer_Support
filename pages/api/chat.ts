@@ -1,40 +1,35 @@
-import  OpenAI  from "openai";
+import { ChatRequest, ChatResponse, ErrorResponse } from '@/types/page';
+import { GoogleGenerativeAI, GenerativeModel } from '@google/generative-ai';
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const configuration = {
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-};
-
-const openai = new OpenAI(configuration);
+const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey ?? '');
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<ChatResponse | ErrorResponse>
 ) {
-  if (req.method !== 'POST') {
+  if (!apiKey) {
+    throw new Error('Gemini API key is missing');
+  }
+  if (req.method !== "POST") {
+    console.log("Not post request");
 
-    console.log('Not post request');
-    
     return res.status(405).json({ message: "Only POST requests are allowed" });
   }
-  const { message } = req.body;
+  const { message } = req.body as ChatRequest;
   if (!message) {
-    console.log('Message is required');
-    
+    console.log("Message is required");
+
     return res.status(400).json({ message: "Message is required" });
   }
   try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: message }],
-    });
-
-    const completion = response.choices[0].message?.content;
-
-    res.status(200).json({ message: completion });
+    const model: GenerativeModel = await genAI.getGenerativeModel({ model: "gemini-pro" });
+    const result = await model.generateContent(message);
+    const response=result.response.text();
+    return res.status(200).json({ message: response });
   } catch (error: any) {
-    console.log("Error",error);
-    
+    console.log("Error", error);
     res
       .status(500)
       .json({ message: "Error with OpenAI API", error: error.message });
