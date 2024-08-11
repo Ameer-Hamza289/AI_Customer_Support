@@ -3,6 +3,7 @@ import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useUser } from '@/context/userContext';
+import { IoMdArrowBack } from "react-icons/io";
 
 interface FormType {
     name: string;
@@ -61,8 +62,11 @@ export default function AuthPage() {
    
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-4">
-         
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-4 relative">
+            <div className="absolute top-10 left-4">
+                {/* <IoMdArrowBack /> */}
+                <button className='p-1 text-white bg-green-600 rounded hover:bg-gray-950' onClick={()=>router.push('/')}>Back</button>
+            </div>
             <div className="bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
                 <h2 className="text-2xl font-bold text-center mb-6">Authenticate to continue</h2>
                 <form className="space-y-4">
