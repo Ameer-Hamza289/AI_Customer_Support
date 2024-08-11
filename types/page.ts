@@ -1,8 +1,14 @@
 export interface Message {
   text: string;
-  sender: "bot" | "user";
+  sender: "assistant" | "user";
 }
-
-export type ChatResponse = {
+export interface ChatRequest {
   message: string;
-};
+}
+export interface ChatResponse {
+  message: string;
+}
+export interface ErrorResponse {
+  error: string;
+  details?: any;
+}

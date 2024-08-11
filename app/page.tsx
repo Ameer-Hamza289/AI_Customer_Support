@@ -9,9 +9,7 @@ import { ChatResponse, Message } from '@/types/page';
 
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([
-    { text: 'How are you?', sender: 'bot' },
-    { text: 'Write me an essay about ancient Rome, their civilization and culture and what food was the best considered item among them?', sender: 'user' },
-    { text: 'How are you?', sender: 'bot' },
+    { text: 'Hey, How can i assist you?', sender: 'assistant' }
   ]);
 
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -29,16 +27,24 @@ export default function Home() {
     const data: ChatResponse = await response.json();
     return data.message;
   }
-  const handleSendMessage = async (text: string) => {
-    setMessages([...messages, { text, sender: 'user' }]);
-    const aiResponse = await sendMessage(text);
-    console.log(aiResponse, "response");
 
+  const clearChat=()=>{
+    setMessages([{ text: 'Hey, How can i assist you?', sender: 'assistant' }])
+  }
+
+  const handleSendMessage = async (text: string) => {
+    const newMessages = [...messages, { text, sender: 'user' as 'user' }];
+    setMessages(newMessages);
+  
+    const aiResponse = await sendMessage(text);
+    // console.log(aiResponse, "response");
+    setMessages([...newMessages, { text: aiResponse, sender: "assistant" }]);
   };
 
   const handleLogout = () => {
     // Implement logout functionality here
     console.log('Logged out');
+    clearChat();
   };
 
   return (
