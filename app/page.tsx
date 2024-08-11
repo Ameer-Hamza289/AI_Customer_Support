@@ -1,13 +1,22 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import ChatContainer from '@/components/ChatContainer';
 import ChatMessage from '@/components/ChatMessage';
 import { FaUserCircle } from 'react-icons/fa';
+
+import { useRouter } from 'next/navigation';
+import { onAuthStateChanged } from 'firebase/auth';
+import { toast } from 'react-toastify';
+import { useUser } from '@/context/userContext';
+import Link from 'next/link';
 import { ChatResponse, Message } from '@/types/page';
 
 
+
 export default function Home() {
+
+  const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([
     { text: 'Hey, How can i assist you?', sender: 'assistant' }
   ]);
@@ -40,13 +49,31 @@ export default function Home() {
     // console.log(aiResponse, "response");
     setMessages([...newMessages, { text: aiResponse, sender: "assistant" }]);
   };
+  const { user, loading, logout } = useUser();
 
-  const handleLogout = () => {
-    // Implement logout functionality here
-    console.log('Logged out');
-    clearChat();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      clearChat();
+      toast.success('Logout Successfully!');
+      router.push('/auth');
+    } catch (error) {
+      toast.error('Error logging out');
+    }
   };
+  
+  if (loading) return <div>Loading...</div>;
+  if (!user) return (
+    <div>
+      <Link href={'/auth'}>
+        <button>
+          Please login
+        </button>
+      </Link>
+    </div>
 
+  )
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       <Head>
